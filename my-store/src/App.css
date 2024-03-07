@@ -1,11 +1,84 @@
 .App {
-  text-align: center;
+  text-align: left;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+ul {
+  display: flex;
+  /* justify-content: space-between; */
+  list-style: none;
+  background-color: #004687;
+  padding: 15px;  
 }
+
+li{
+  margin-left: 30px;
+}
+
+.auth{
+  margin-left:auto;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  color: rgb(214, 99, 99);
+}
+
+.login{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.name {
+  border-radius: 50%; 
+  background-color: #e8e8e8;
+  padding: 5px 10px; 
+  display: inline-block; 
+  color: rgb(176, 9, 9); 
+  text-decoration: none; 
+}
+
+.logout{
+  margin-right: 50px;
+}
+
+.register{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.addproduct{
+ display: flex;
+  justify-content: center;
+  margin-top: 70px;
+}
+
+.dropdown select {
+ background: transparent;
+ color: white;
+ border: none;
+ outline: none;
+ -webkit-appearance: none;
+ -moz-appearance: none;
+ appearance: none;
+ /* background-image: url('path_to_your_custom_arrow_icon.svg'); */
+ background-repeat: no-repeat;
+ background-position: right center;
+ background-size: 16px;
+ padding-right: 20px;
+}
+
+.dropdown select option {
+ background: #004687;
+ color: white;
+}
+
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
