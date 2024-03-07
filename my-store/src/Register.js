@@ -1,8 +1,8 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
+import axios from 'axios';
 
 function Register() {
   const [name, setName] = useState('');
@@ -10,7 +10,6 @@ function Register() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [role, setRole] = useState('');
-//   const [image,setImage]=useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,27 +38,23 @@ function Register() {
     setRole(e.target.value);
   };
 
-//   const handleImageChange = (e) => {
-//     const selectedImage = e.target.file[0];
-//     setImage(selectedImage);
-//   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const temp={
+        name:name,
+        email:email,
+        password:password,
+        role:role
+    }
+    console.log(temp);
     try {
       if (password === confirmPassword) {
-        // Create a FormData object to send form data including the image file
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('email', email);
-        formData.append('password', password);
-        formData.append('role', role);
-        // formData.append('image', image); 
-
         const response = await fetch('https://jsonserver-iota.vercel.app/user', {
           method: 'POST',
-          body: formData, 
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(temp),
         });
 
         if (!response.ok) {
@@ -72,17 +67,40 @@ function Register() {
         localStorage.setItem('user-name', data.name);
         localStorage.setItem('user-id', data.id);
         navigate('/');
-      } else {
-        alert(`Passwords do not match!`);
-      }
-    } catch (error) {
+    }
+    else{
+        alert('password not match !');
+    }
+
+    // if(password===confirmPassword){
+    //     const response = await axios.post('http://localhost:3000/user', temp, {
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //         },
+    //       });
+    
+    //       const data = response.data;
+    //       console.log(data);
+    
+    //       localStorage.setItem('user-name', data.name);
+    //       localStorage.setItem('user-id', data.id);
+    //       navigate('/');
+    
+    // }
+    // else {
+    //     alert(`Passwords do not match!`);
+    //  }
+
+    } 
+     catch (error) {
       console.error('Registration Error:', error);
     }
+
   };
 
   return (
     <div className='container-fluid'>
-        <Header />
+      <Header />
       <div className='register'>
         <form style={{ width: '500px' }} onSubmit={handleSubmit}>
           <h1 className='text-center'>Register</h1>
@@ -141,18 +159,6 @@ function Register() {
               placeholder='Enter Your Confirm Password'
             />
           </div>
-          {/* <div className='mb-3'>
-            <label htmlFor='confirmPassword' className='form-label'>
-              image
-            </label>
-            <input
-              type='file'
-              id='image'
-              value={image}
-              onChange={handleImageChange}
-              className='form-control'
-            />
-          </div> */}
           <div className='mb-3'>
             <label htmlFor='role' className='form-label'>
               Role
@@ -167,12 +173,6 @@ function Register() {
               <option value='admin'>Admin</option>
               <option value='worker'>Worker</option>
             </select>
-          </div>
-          <div>
-            <label className='container'>
-              <input type='checkbox' checked='checked' />
-              <span className='checkmark'></span>
-            </label>
           </div>
           <div className='d-flex justify-content-center'>
             <button type='submit' className='btn btn-primary'>
